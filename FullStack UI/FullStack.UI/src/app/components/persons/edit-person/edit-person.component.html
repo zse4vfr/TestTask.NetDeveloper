@@ -1,0 +1,42 @@
+<div class="container my-5">
+  <h1 class="mb-3">Редактировать человека</h1>
+
+  <form #form="ngForm" (ngSubmit)="updatePerson()">
+    <div class="mb-3">
+      <label for="id" class="form-label">Id</label>
+      <input type="text" class="form-control" placeholder="Фамилия" id="id"
+             name="id" readonly [(ngModel)]="personDetails.id" />
+    </div>
+    <div class="mb-3">
+      <label for="surname" class="form-label">Фамилия</label>
+      <input type="text" class="form-control" placeholder="Имя" id="surname"
+             name="surname" [(ngModel)]="personDetails.surname" />
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Имя</label>
+      <input type="text" class="form-control" id="name"
+             name="name" [(ngModel)]="personDetails.name"/>
+    </div>
+    <div class="mb-3">
+      <label for="surname" class="form-label">Год рождения</label>
+      <input type="number" class="form-control" min="1900" max="2024" id="yearOfBirth"
+             name="yearOfBirth" [(ngModel)]="personDetails.yearOfBirth"/>
+    </div>
+    <div class="mb-3" id="phoneNumbersContainer">
+      <input type="tel" class="form-control" placeholder="Номер телефона" id="newPhoneNumber"
+             name="newPhoneNumber" [(ngModel)]="newPhoneNumber" />
+      <button type="button" class="btn-primary" [disabled]="!isValidPhoneNumber()" (click)="addPhoneNumber()" >Добавить номер телефона</button>
+      <ng-container *ngIf="personDetails.phoneNumbers.length > 0">
+        <div *ngFor="let phoneNumber of personDetails.phoneNumbers; let i = index">
+          <label for="phoneNumber-{{i}}">Номер телефона {{i + 1}}:</label>
+          <input type="tel" class="form-control" id="phoneNumber-{{i}}"
+                 name="phoneNumber-{{i}}" [(ngModel)]="personDetails.phoneNumbers[i]">
+          <button type="button" class="btn-danger" (click)="removePhoneNumber(i)">Удалить</button>
+        </div>
+      </ng-container>
+    </div>
+
+    <button type="submit" class="btn-primary">Сохранить</button>
+    <button type="Button" class="btn-primary" (click)="deletePerson(String(personDetails.id))">Удалить</button>
+  </form>
+</div>

@@ -1,0 +1,36 @@
+<div class="container my-5">
+  <h1 class="mb-3">Добавить нового человека</h1>
+
+  <form #form="ngForm" (ngSubmit)="addPerson()">
+    <div class="mb-3">
+      <label for="surname" class="form-label">Фамилия</label>
+      <input type="text" class="form-control" placeholder="Фамилия" id="surname"
+             name="surname" [(ngModel)]="addPersonRequest.surname" />
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Имя</label>
+      <input type="text" class="form-control" placeholder="Имя" required id="name"
+             name="name" [(ngModel)]="addPersonRequest.name"/>
+    </div>
+    <div class="mb-3">
+      <label for="surname" class="form-label">Год рождения</label>
+      <input type="number" class="form-control" min="1900" max="2024" id="yearOfBirth"
+             name="yearOfBirth" [(ngModel)]="addPersonRequest.yearOfBirth"/>
+    </div>
+    <div class="mb-3" id="phoneNumbersContainer">
+      <input type="tel" class="form-control" placeholder="Номер телефона" id="newPhoneNumber"
+             name="newPhoneNumber" [(ngModel)]="newPhoneNumber" />
+      <button type="button" class="btn-primary" [disabled]="!isValidPhoneNumber()" (click)="addPhoneNumber()" >Добавить номер телефона</button>
+      <ng-container *ngIf="addPersonRequest.phoneNumbers.length > 0">
+        <div *ngFor="let phoneNumber of addPersonRequest.phoneNumbers; let i = index">
+          <label for="phoneNumber-{{i}}">Номер телефона {{i + 1}}:</label>
+          <input type="tel" class="form-control" id="phoneNumber-{{i}}"
+                 name="phoneNumber-{{i}}" [(ngModel)]="addPersonRequest.phoneNumbers[i]">
+          <button type="button" class="btn-danger"  (click)="removePhoneNumber(i)">Удалить</button>
+        </div>
+      </ng-container>
+    </div>
+
+    <button type="submit" class="btn-primary">Добавить</button>
+  </form>
+</div>
